@@ -29,10 +29,13 @@ public class Postcode {
     @Column(name = "postcode")
     @Getter
     @Setter
-    
+
     private Integer postcode;
 
-    // * Suburb
+    /**
+     * List of Suburbs that this Postcode covers. <br/>
+     * It should be initialized with either an empty list or a list of suburbs that do not already have a postcode
+     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
     @Column(name = "suburb")
