@@ -1,6 +1,7 @@
 package com.jsu.postcodeapi.Suburb;
 
 import com.jsu.postcodeapi.Postcode.Postcode;
+import com.jsu.postcodeapi.enums.EState;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,15 +37,7 @@ public class Suburb {
     @Column(name = "state")
     @Getter
     @Setter
-    private String state;
-
-    // * State Country
-    // NOTE: Also consider replacing this with a FK to a country object if we decide
-    // to give each country their own table
-    @Column(name = "country")
-    @Getter
-    @Setter
-    private String country;
+    private EState state;
 
     // * Suburb Population
     @Column(name = "population")

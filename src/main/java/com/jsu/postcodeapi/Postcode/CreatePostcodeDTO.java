@@ -14,7 +14,6 @@ public class CreatePostcodeDTO {
     @Setter
     private Integer postcode;
 
-    @NotBlank
     @Getter
     @Setter
     private List<Suburb> suburbs;
