@@ -28,4 +28,10 @@ public class PostcodeService {
 
         postcodeRepository.save(postcode);
     }
+
+    public Postcode getPostcodeBySuburb(String suburb) {
+        return null;
+    }
+
+
 }
