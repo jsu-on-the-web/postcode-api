@@ -1,6 +1,7 @@
 package com.jsu.postcodeapi.Postcode;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,10 @@ public class PostcodeService {
         postcodeRepository.save(postcode);
     }
 
-    public Postcode getPostcodeBySuburb(String suburb) {
-        return null;
+    public Optional<Postcode> getPostcodeBySuburb(String suburb) {
+        Optional<Postcode> findBySuburb = postcodeRepository.existsBySuburb(suburb);
+
+        return findBySuburb;
     }
 
 

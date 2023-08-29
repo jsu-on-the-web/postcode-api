@@ -1,12 +1,16 @@
 package com.jsu.postcodeapi.Postcode;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jsu.postcodeapi.exceptions.BadRequestException;
+import com.jsu.postcodeapi.exceptions.NotFoundException;
 
 public class PostcodeController {
     private PostcodeService service;
@@ -42,11 +46,14 @@ public class PostcodeController {
      * @return a ResponseEntity object containing the postcode information for the
      *         given suburb, if it exists
      */
-    @GetMapping(value = "/postcodes/{suburb}")
+    @GetMapping("/postcodes/{suburb}")
     public ResponseEntity<Postcode> getPostcodeBySuburb(
             @RequestParam("suburb") String suburb) {
-        Postcode postcodesBySuburb = this.service.getPostcodeBySuburb(suburb);
-        return new ResponseEntity<>(postcodesBySuburb, HttpStatus.OK);
+        Optional<Postcode> postcodeBySuburb = this.service.getPostcodeBySuburb(suburb);
+        if (postcodeBySuburb.isEmpty()) {
+            throw new NotFoundException("Postcode that's associated with " + suburb + " does not exist");
+        }
+        return new ResponseEntity<>(postcodeBySuburb.get(), HttpStatus.OK);
     }
 
     /* -------------------------------------------------------------------------- */
