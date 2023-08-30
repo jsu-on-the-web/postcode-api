@@ -22,7 +22,7 @@ public class Postcode {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postcode_id;
 
     // * Actual Postcode 
     // This isn't the id because some suburbs share a postcode (e.g Clayton and Notting Hill in VIC)
@@ -37,7 +37,7 @@ public class Postcode {
      * It should be initialized with either an empty list or a list of suburbs that do not already have a postcode
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "postcode_id")
     @Column(name = "suburb")
     @Getter
     @Setter
