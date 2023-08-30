@@ -40,7 +40,7 @@ public class PostcodeService {
     }
 
     public Optional<Postcode> getPostcodeBySuburb(String suburb) {
-        Optional<Postcode> findBySuburb = postcodeRepository.existsBySuburb(suburb);
+        Optional<Postcode> findBySuburb = postcodeRepository.findBySuburb(suburb);
 
         return findBySuburb;
     }

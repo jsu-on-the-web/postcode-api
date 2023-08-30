@@ -1,4 +1,5 @@
 package com.jsu.postcodeapi.Postcode;
+
 import java.util.List;
 
 import com.jsu.postcodeapi.Suburb.Suburb;
@@ -6,6 +7,7 @@ import com.jsu.postcodeapi.Suburb.Suburb;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,14 +20,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "postcode")
 public class Postcode {
-    // * Primary Key 
+    // * Primary Key
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postcode_id;
 
-    // * Actual Postcode 
-    // This isn't the id because some suburbs share a postcode (e.g Clayton and Notting Hill in VIC)
+    // * Actual Postcode
+    // This isn't the id because some suburbs share a postcode (e.g Clayton and
+    // Notting Hill in VIC)
     @Column(name = "postcode")
     @Getter
     @Setter
@@ -34,11 +37,10 @@ public class Postcode {
 
     /**
      * List of Suburbs that this Postcode covers. <br/>
-     * It should be initialized with either an empty list or a list of suburbs that do not already have a postcode
+     * It should be initialized with either an empty list or a list of suburbs that
+     * do not already have a postcode
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "postcode_id")
-    @Column(name = "suburb")
+    @OneToMany(mappedBy = "suburbs", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
     private List<Suburb> suburbs;
