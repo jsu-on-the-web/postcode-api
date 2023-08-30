@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jsu.postcodeapi.exceptions.BadRequestException;
 import com.jsu.postcodeapi.exceptions.NotFoundException;
+
+import jakarta.validation.Valid;
 
 public class PostcodeController {
     private PostcodeService service;
@@ -23,6 +27,15 @@ public class PostcodeController {
     /* -------------------------------------------------------------------------- */
     /* CREATE Methods */
     /* -------------------------------------------------------------------------- */
+
+    @PostMapping
+    public ResponseEntity<Postcode> addPostcode(
+            @Valid @RequestBody CreatePostcodeDTO createPostcodeDTO)
+    {
+        Postcode postcode = this.service.addPostcode(createPostcodeDTO);
+        return new ResponseEntity<>(postcode, HttpStatus.CREATED);
+    }
+    
 
     /* -------------------------------------------------------------------------- */
     /* READ Methods */

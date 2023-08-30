@@ -3,14 +3,19 @@ package com.jsu.postcodeapi.Postcode;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jsu.postcodeapi.exceptions.BadRequestException;
 
+import jakarta.validation.Valid;
+
 @Service
 public class PostcodeService {
     private PostcodeRepository postcodeRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     public PostcodeService(PostcodeRepository postcodeRepository) {
@@ -21,13 +26,17 @@ public class PostcodeService {
         return postcodeRepository.findAll();
     }
 
-    public void addPostcode(Postcode postcode) {
-        Boolean existsPostcode = postcodeRepository.exists(postcode.getPostcode());
+    public Postcode addPostcode(@Valid CreatePostcodeDTO createPostcodeDTO) {
+        Boolean existsPostcode = postcodeRepository.exists(createPostcodeDTO.getPostcode());
         if (existsPostcode) {
-            throw new BadRequestException("Postcode " + postcode.getPostcode() + " already exists");
+            throw new BadRequestException("Postcode " + createPostcodeDTO.getPostcode() + " already exists");
         }
 
-        postcodeRepository.save(postcode);
+        Postcode newPostcode = modelMapper.map(createPostcodeDTO, Postcode.class);
+
+        Postcode createdPostcode = this.postcodeRepository.save(newPostcode);
+
+        return createdPostcode;
     }
 
     public Optional<Postcode> getPostcodeBySuburb(String suburb) {
@@ -35,6 +44,5 @@ public class PostcodeService {
 
         return findBySuburb;
     }
-
 
 }
