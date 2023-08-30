@@ -32,7 +32,6 @@ public class Postcode {
     @Column(name = "postcode")
     @Getter
     @Setter
-
     private Integer postcode;
 
     /**
@@ -40,7 +39,8 @@ public class Postcode {
      * It should be initialized with either an empty list or a list of suburbs that
      * do not already have a postcode
      */
-    @OneToMany(mappedBy = "suburbs", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "suburb_id", nullable = true)
     @Getter
     @Setter
     private List<Suburb> suburbs;
