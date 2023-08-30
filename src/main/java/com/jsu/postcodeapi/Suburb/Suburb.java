@@ -23,7 +23,7 @@ public class Suburb {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long suburb_id;
 
     // * Suburb Name
     @Column(name = "suburb_name")
@@ -47,7 +47,7 @@ public class Suburb {
 
     // * Postcode
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "postcode_id")
     @Getter
     @Setter
     private Postcode postcode;

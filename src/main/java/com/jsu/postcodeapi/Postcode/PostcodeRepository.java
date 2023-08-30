@@ -11,14 +11,22 @@ public interface PostcodeRepository extends JpaRepository<Postcode, Long> {
 
     
     /**
-     * Sends a query to the database to check if the postcode is present in the database
+     * Sends a query to the database to check if the postcode is present in the
+     * database
+     * 
      * @param postcode - the postcode to check
-     * @return Whether the postcode exists on the database or not
+     * @return Whether the postcode exists in the database or not
      */
-    @Query("SELECT CASE WHEN p.postcode = ? THEN 1 ELSE 0 END FROM Postcode p")
+    @Query("SELECT CASE WHEN p.postcode = ?1 THEN true ELSE false END FROM Postcode p")
     Boolean exists(Integer postcode);
 
-    @Query("SELECT p FROM Postcode p WHERE p.suburb = ?1")
-    Optional<Postcode> existsBySuburb(String suburb);
+    /**
+     * Finds a Postcode by its suburb
+     * 
+     * @param suburb - the suburb to search for
+     * @return The Postcode object if found, otherwise empty
+     */
+    @Query("SELECT p FROM Postcode p WHERE p.suburbs = ?1")
+    Optional<Postcode> findBySuburb(String suburb);
 
 }
