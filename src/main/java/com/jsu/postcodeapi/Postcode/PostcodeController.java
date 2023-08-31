@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jsu.postcodeapi.exceptions.BadRequestException;
@@ -16,6 +18,8 @@ import com.jsu.postcodeapi.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
 
+@Controller
+@RequestMapping("/postcodes")
 public class PostcodeController {
     private PostcodeService service;
 
@@ -28,7 +32,7 @@ public class PostcodeController {
     /* CREATE Methods */
     /* -------------------------------------------------------------------------- */
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Postcode> addPostcode(
             @Valid @RequestBody CreatePostcodeDTO createPostcodeDTO)
     {
@@ -46,7 +50,7 @@ public class PostcodeController {
      *
      * @return a ResponseEntity object containing a list of Postcode objects
      */
-    @GetMapping("/postcodes")
+    @GetMapping()
     public ResponseEntity<List<Postcode>> getAllPostcodes() {
         List<Postcode> allPostcodes = this.service.getAllPostcodes();
         return new ResponseEntity<>(allPostcodes, HttpStatus.OK);
@@ -59,7 +63,7 @@ public class PostcodeController {
      * @return a ResponseEntity object containing the postcode information for the
      *         given suburb, if it exists
      */
-    @GetMapping("/postcodes/{suburb}")
+    @GetMapping(path = "{suburb}")
     public ResponseEntity<Postcode> getPostcodeBySuburb(
             @RequestParam("suburb") String suburb) {
         Optional<Postcode> postcodeBySuburb = this.service.getPostcodeBySuburb(suburb);
