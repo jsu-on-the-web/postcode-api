@@ -32,6 +32,11 @@ public class PostcodeService {
             throw new BadRequestException("Postcode " + createPostcodeDTO.getPostcode() + " already exists");
         }
 
+        // Checking that the postcode is also in-bounds (must be 4 digits)
+        if (!createPostcodeDTO.getPostcode().toString().matches("\\d{4}")) {
+            throw new BadRequestException("Postcode must be 4 digits");
+        }
+
         Postcode newPostcode = modelMapper.map(createPostcodeDTO, Postcode.class);
 
         Postcode createdPostcode = this.postcodeRepository.save(newPostcode);
