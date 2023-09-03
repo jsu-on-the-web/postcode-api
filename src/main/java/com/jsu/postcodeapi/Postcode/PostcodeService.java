@@ -22,10 +22,22 @@ public class PostcodeService {
         this.postcodeRepository = postcodeRepository;
     }
 
+    /**
+     * Retrieves all postcodes from the repository.
+     *
+     * @return a list of Postcode objects representing all the postcodes
+     *         in the repository
+     */
     public List<Postcode> getAllPostcodes() {
         return this.postcodeRepository.findAll();
     }
 
+    /**
+     * Adds a new postcode to the system.
+     *
+     * @param  createPostcodeDTO  the DTO containing the details of the postcode to be added
+     * @return                   the newly created Postcode object
+     */
     public Postcode addPostcode(@Valid CreatePostcodeDTO createPostcodeDTO) {
         Boolean existsPostcode = postcodeRepository.exists(createPostcodeDTO.getPostcode());
         if (existsPostcode) {
@@ -44,6 +56,12 @@ public class PostcodeService {
         return createdPostcode;
     }
 
+    /**
+     * Retrieves a Postcode object by suburb.
+     *
+     * @param  suburb  the name of the suburb
+     * @return         an Optional containing the Postcode object if found, or an empty Optional if not found
+     */
     public Optional<Postcode> getPostcodeBySuburb(String suburb) {
         Optional<Postcode> findBySuburb = this.postcodeRepository.findBySuburb(suburb);
 
@@ -51,11 +69,24 @@ public class PostcodeService {
     }
 
 
+    /**
+     * Retrieves a `Postcode` object by its ID.
+     *
+     * @param  id  the ID of the `Postcode` object to retrieve
+     * @return     an optional containing the found `Postcode` object, or an empty optional if not found
+     */
     private Optional<Postcode> findById(Long id) {
         Optional<Postcode> foundPostcode = this.postcodeRepository.findById(id);
         return foundPostcode;
     }
 
+    /**
+     * Updates a postcode with the given ID using the provided data.
+     *
+     * @param  id    the ID of the postcode to update
+     * @param  data  the data to update the postcode with
+     * @return       an optional containing the updated postcode if it exists, otherwise an empty optional
+     */
     public Optional<Postcode> updatePostcode(Long id, @Valid UpdatePostcodeDTO data) {
         //1. Find the postcode to update 
         Optional<Postcode> postcodeToUpdate = this.findById(id);
@@ -69,6 +100,12 @@ public class PostcodeService {
         return postcodeToUpdate;
     }
 
+    /**
+     * Deletes a postcode by ID.
+     *
+     * @param  id  the ID of the postcode to be deleted
+     * @return     true if the postcode was successfully deleted, false otherwise
+     */
     public boolean deleteById(Long id) {
         Optional<Postcode> deletedPostcode = this.findById(id);
         if (deletedPostcode.isEmpty()) {

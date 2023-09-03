@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jsu.postcodeapi.exceptions.BadRequestException;
 import com.jsu.postcodeapi.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
@@ -35,14 +34,18 @@ public class PostcodeController {
     /* CREATE Methods */
     /* -------------------------------------------------------------------------- */
 
+    /**
+     * Adds a new postcode to the system.
+     *
+     * @param  createPostcodeDTO  the data transfer object containing the details of the postcode to be added
+     * @return                    the HTTP response entity containing the newly created postcode and the HTTP status code
+     */
     @PostMapping()
     public ResponseEntity<Postcode> addPostcode(
-            @Valid @RequestBody CreatePostcodeDTO createPostcodeDTO)
-    {
+            @Valid @RequestBody CreatePostcodeDTO createPostcodeDTO) {
         Postcode postcode = this.service.addPostcode(createPostcodeDTO);
         return new ResponseEntity<>(postcode, HttpStatus.CREATED);
     }
-    
 
     /* -------------------------------------------------------------------------- */
     /* READ Methods */
@@ -80,6 +83,13 @@ public class PostcodeController {
     /* UPDATE Methods */
     /* -------------------------------------------------------------------------- */
 
+    /**
+     * Updates a postcode.
+     *
+     * @param  id    the ID of the postcode to update
+     * @param  data  the data to update the postcode with
+     * @return       the updated postcode with an OK HTTP Status
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<Postcode> updatePostcode(@PathVariable Long id,
             @Valid @RequestBody UpdatePostcodeDTO data) {
@@ -94,6 +104,12 @@ public class PostcodeController {
     /* DELETE Methods */
     /* -------------------------------------------------------------------------- */
 
+    /**
+     * Deletes a postcode by ID.
+     *
+     * @param  id    the ID of the postcode to delete
+     * @return       a ResponseEntity with NO_CONTENT status if the postcode is deleted successfully
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePostcode(@PathVariable Long id) {
         boolean deletedPostcode = this.service.deleteById(id);
