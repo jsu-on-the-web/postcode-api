@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,4 +93,13 @@ public class PostcodeController {
     /* -------------------------------------------------------------------------- */
     /* DELETE Methods */
     /* -------------------------------------------------------------------------- */
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostcode(@PathVariable Long id) {
+        boolean deletedPostcode = this.service.deleteById(id);
+        if (!deletedPostcode) {
+            throw new NotFoundException("Postcode that's associated with " + id + " does not exist, unable to delete");
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

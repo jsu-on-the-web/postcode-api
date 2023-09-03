@@ -69,5 +69,15 @@ public class PostcodeService {
         return postcodeToUpdate;
     }
 
+    public boolean deleteById(Long id) {
+        Optional<Postcode> deletedPostcode = this.findById(id);
+        if (deletedPostcode.isEmpty()) {
+            return false;
+        }
+
+        this.postcodeRepository.delete(deletedPostcode.get());
+        return true;
+    }
+
 
 }
