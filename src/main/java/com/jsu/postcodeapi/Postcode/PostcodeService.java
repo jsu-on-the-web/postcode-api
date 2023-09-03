@@ -23,7 +23,7 @@ public class PostcodeService {
     }
 
     public List<Postcode> getAllPostcodes() {
-        return postcodeRepository.findAll();
+        return this.postcodeRepository.findAll();
     }
 
     public Postcode addPostcode(@Valid CreatePostcodeDTO createPostcodeDTO) {
@@ -45,9 +45,29 @@ public class PostcodeService {
     }
 
     public Optional<Postcode> getPostcodeBySuburb(String suburb) {
-        Optional<Postcode> findBySuburb = postcodeRepository.findBySuburb(suburb);
+        Optional<Postcode> findBySuburb = this.postcodeRepository.findBySuburb(suburb);
 
         return findBySuburb;
     }
+
+
+    private Optional<Postcode> findById(Long id) {
+        Optional<Postcode> foundPostcode = this.postcodeRepository.findById(id);
+        return foundPostcode;
+    }
+
+    public Optional<Postcode> updatePostcode(Long id, @Valid UpdatePostcodeDTO data) {
+        //1. Find the postcode to update 
+        Optional<Postcode> postcodeToUpdate = this.findById(id);
+
+        // 2. If it exists, update it and save it back to the repository
+        if (postcodeToUpdate.isPresent()) {
+            Postcode existingPostcode = postcodeToUpdate.get();
+            modelMapper.map(data, existingPostcode);
+            return Optional.of(this.postcodeRepository.save(existingPostcode));
+        }
+        return postcodeToUpdate;
+    }
+
 
 }

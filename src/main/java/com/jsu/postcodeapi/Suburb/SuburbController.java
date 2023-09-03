@@ -34,6 +34,13 @@ public class SuburbController {
     /* CREATE Methods */
     /* -------------------------------------------------------------------------- */
 
+    @PostMapping()
+    public ResponseEntity<Suburb> addSuburb(
+            @Valid @RequestBody CreateSuburbDTO createSuburbDTO
+    ) {
+        Suburb suburb = this.service.addSuburb(createSuburbDTO);
+        return new ResponseEntity<>(suburb, HttpStatus.CREATED);
+    }
     /* -------------------------------------------------------------------------- */
     /* READ Methods */
     /* -------------------------------------------------------------------------- */
