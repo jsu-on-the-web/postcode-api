@@ -7,8 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jsu.postcodeapi.Suburb.Suburb;
-import com.jsu.postcodeapi.Suburb.SuburbRepository;
 import com.jsu.postcodeapi.exceptions.BadRequestException;
 import com.jsu.postcodeapi.exceptions.NotFoundException;
 
@@ -43,7 +41,7 @@ public class SuburbService {
      */
     public Suburb addSuburb(@Valid CreateSuburbDTO createSuburbDTO) {
         // Check if the suburb already exists on the database
-        // ! Right now, we're calling getPostcode() (suburb version) on 
+        // ! Right now, we're calling getPostcode() (suburb version) on getPostcode() (postcode version), which can seem a bit redundant.
         Boolean existsSuburb = suburbRepository.existsByNameAndPostcode(createSuburbDTO.getSuburbName(),
                 createSuburbDTO.getPostcode().getPostcode());
         if (existsSuburb) {
@@ -66,5 +64,15 @@ public class SuburbService {
 
         return foundSuburb.get();
 	}
-    
+
+    public Optional<Suburb> updateSuburb(Long id, UpdateSuburbDTO updates) {
+        Optional<Suburb> foundSuburb = suburbRepository.findById(id);
+
+        if (foundSuburb.isPresent()) {
+            Suburb existingSuburb = foundSuburb.get();
+            modelMapper.map(updates, existingSuburb);
+            return Optional.of(this.suburbRepository.save(existingSuburb));
+        }
+        return foundSuburb;
+    }
 }

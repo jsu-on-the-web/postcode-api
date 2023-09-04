@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +64,18 @@ public class SuburbController {
     /* -------------------------------------------------------------------------- */
     /* UPDATE Methods */
     /* -------------------------------------------------------------------------- */
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Suburb> updateSuburb(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateSuburbDTO updates
+    ) {
+        Optional<Suburb> suburb = this.service.updateSuburb(id, updates);
+        if (suburb.isEmpty()) {
+            throw new NotFoundException("Suburb with id " + id + "not found, unable to update.");
+        }
+        return new ResponseEntity<>(suburb.get(), HttpStatus.OK);
+    }
 
     /* -------------------------------------------------------------------------- */
     /* DELETE Methods */
