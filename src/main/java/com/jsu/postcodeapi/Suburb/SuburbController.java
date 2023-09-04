@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,20 @@ public class SuburbController {
     /* -------------------------------------------------------------------------- */
     /* READ Methods */
     /* -------------------------------------------------------------------------- */
+
+    @GetMapping()
+    public ResponseEntity<List<Suburb>> getAllSuburbs() {
+        List<Suburb> allSuburbs = this.service.getAllSuburbs();
+        return new ResponseEntity<>(allSuburbs, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Suburb> getSuburbById(
+            @PathVariable Long id
+    ) {
+        Suburb suburb = this.service.getSuburbById(id);
+        return new ResponseEntity<>(suburb, HttpStatus.OK);
+    }
 
     /* -------------------------------------------------------------------------- */
     /* UPDATE Methods */
