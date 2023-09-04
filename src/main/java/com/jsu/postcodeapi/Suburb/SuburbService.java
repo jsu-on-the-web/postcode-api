@@ -75,4 +75,13 @@ public class SuburbService {
         }
         return foundSuburb;
     }
+
+    public boolean deleteById(Long id) {
+        Optional<Suburb> deletedSuburb = this.suburbRepository.findById(id);
+        if (deletedSuburb.isEmpty()) {
+            return false;
+        }
+        this.suburbRepository.delete(deletedSuburb.get());
+        return true;
+    }
 }

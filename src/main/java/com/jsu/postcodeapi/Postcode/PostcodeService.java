@@ -120,6 +120,4 @@ public class PostcodeService {
         this.postcodeRepository.delete(deletedPostcode.get());
         return true;
     }
-
-
 }
