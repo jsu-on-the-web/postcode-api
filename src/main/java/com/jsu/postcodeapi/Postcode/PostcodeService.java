@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jsu.postcodeapi.exceptions.BadRequestException;
+import com.jsu.postcodeapi.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
 
@@ -64,6 +65,10 @@ public class PostcodeService {
      */
     public Optional<Postcode> getPostcodeBySuburb(String suburb) {
         Optional<Postcode> findBySuburb = this.postcodeRepository.findBySuburb(suburb);
+
+        if (findBySuburb.isEmpty()) {
+            throw new NotFoundException("Postcode not found");
+        }
 
         return findBySuburb;
     }
