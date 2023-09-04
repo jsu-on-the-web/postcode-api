@@ -37,6 +37,12 @@ public class SuburbController {
     /* CREATE Methods */
     /* -------------------------------------------------------------------------- */
 
+    /**
+     * Adds a new suburb to the system.
+     *
+     * @param  createSuburbDTO  the DTO object containing the details of the new suburb
+     * @return                  the ResponseEntity object containing the newly created suburb and the HTTP status code
+     */
     @PostMapping()
     public ResponseEntity<Suburb> addSuburb(
             @Valid @RequestBody CreateSuburbDTO createSuburbDTO
@@ -48,12 +54,23 @@ public class SuburbController {
     /* READ Methods */
     /* -------------------------------------------------------------------------- */
 
+    /**
+     * Retrieves all suburbs.
+     *
+     * @return  a ResponseEntity containing a list of Suburb objects
+     */
     @GetMapping()
     public ResponseEntity<List<Suburb>> getAllSuburbs() {
         List<Suburb> allSuburbs = this.service.getAllSuburbs();
         return new ResponseEntity<>(allSuburbs, HttpStatus.OK);
     }
 
+    /**
+     * Retrieves a suburb by its ID.
+     *
+     * @param  id  the ID of the suburb to retrieve
+     * @return     a ResponseEntity containing the suburb and HTTP status code
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Suburb> getSuburbById(
             @PathVariable Long id

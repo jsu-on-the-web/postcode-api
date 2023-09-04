@@ -55,6 +55,12 @@ public class SuburbService {
         return createdSuburb;
     }
 
+    /**
+     * Retrieves a suburb by its ID.
+     *
+     * @param  id  the ID of the suburb
+     * @return     the suburb with the specified ID
+     */
     public Suburb getSuburbById(Long id) {
         Optional<Suburb> foundSuburb = suburbRepository.findById(id);
 
@@ -65,6 +71,13 @@ public class SuburbService {
         return foundSuburb.get();
 	}
 
+    /**
+     * Updates a suburb with the given ID.
+     *
+     * @param  id       the ID of the suburb to update
+     * @param  updates  the DTO containing the updates for the suburb
+     * @return          an optional containing the updated suburb if found, otherwise an empty optional
+     */
     public Optional<Suburb> updateSuburb(Long id, UpdateSuburbDTO updates) {
         Optional<Suburb> foundSuburb = suburbRepository.findById(id);
 
@@ -76,6 +89,12 @@ public class SuburbService {
         return foundSuburb;
     }
 
+    /**
+     * Deletes a record by its ID from the database.
+     *
+     * @param  id  the ID of the record to be deleted
+     * @return     true if the record was successfully deleted, false otherwise
+     */
     public boolean deleteById(Long id) {
         Optional<Suburb> deletedSuburb = this.suburbRepository.findById(id);
         if (deletedSuburb.isEmpty()) {
