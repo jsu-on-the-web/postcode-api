@@ -12,10 +12,14 @@ import lombok.Setter;
 public class CreatePostcodeDTO {
     @NotNull
     @Getter
-    @Setter
     private Integer postcode;
 
     @Getter
     @Setter
     private List<Suburb> suburbs;
+
+
+    public void setPostcode(@NotNull int postcode) {
+        this.postcode = postcode;
+    }
 }

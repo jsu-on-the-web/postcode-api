@@ -44,4 +44,13 @@ public class Postcode {
     @Getter
     @Setter
     private List<Suburb> suburbs;
+
+    public Postcode(Integer postcode) {
+        this.postcode = postcode;
+    }
+
+    public Postcode(Integer postcode, List<Suburb> suburbs) {
+        this.postcode = postcode;
+        this.suburbs = suburbs;
+    }
 }

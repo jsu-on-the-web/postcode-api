@@ -19,8 +19,9 @@ public class PostcodeService {
     private ModelMapper modelMapper;
 
     @Autowired
-    public PostcodeService(PostcodeRepository postcodeRepository) {
+    public PostcodeService(PostcodeRepository postcodeRepository, ModelMapper modelMapper) {
         this.postcodeRepository = postcodeRepository;
+        this.modelMapper = modelMapper;
     }
 
     /**

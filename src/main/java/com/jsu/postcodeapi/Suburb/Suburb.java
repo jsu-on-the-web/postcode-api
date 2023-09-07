@@ -51,4 +51,11 @@ public class Suburb {
     @Getter
     @Setter
     private Postcode postcode;
+
+    Suburb(String suburbName, EState state, Long population, Postcode postcode) {
+        this.suburbName = suburbName;
+        this.state = state;
+        this.population = population;
+        this.postcode = postcode;
+    }
 }
