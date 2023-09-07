@@ -20,8 +20,9 @@ public class SuburbService {
     private ModelMapper modelMapper;
 
     @Autowired
-    public SuburbService(SuburbRepository postcodeRepository) {
+    public SuburbService(SuburbRepository postcodeRepository, ModelMapper modelMapper) {
         this.suburbRepository = postcodeRepository;
+        this.modelMapper = modelMapper;
     }
 
     /**
