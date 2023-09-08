@@ -48,17 +48,17 @@ public class PostcodeServiceTest {
     @Test
     void shouldAddValidPostcode() {
         Postcode postcode = new Postcode(
-                1234
-        );
+                1234);
         // Make sure this postcode doesn't already exist
         BDDMockito.given(postcodeRepository.exists(postcode.getPostcode())).willReturn(false);
 
         CreatePostcodeDTO createPostcodeDTO = new CreatePostcodeDTO();
         createPostcodeDTO.setPostcode(postcode.getPostcode());
-        
+
+        Mockito.when(modelMapper.map(createPostcodeDTO, Postcode.class)).thenReturn(postcode);
+
         testingService.addPostcode(createPostcodeDTO);
 
-        // Making use of a Argument Captor to capture the postcode that we'll be checking
         ArgumentCaptor<Postcode> postcodeCaptor = ArgumentCaptor.forClass(Postcode.class);
 
         Mockito.verify(postcodeRepository).save(postcodeCaptor.capture());
