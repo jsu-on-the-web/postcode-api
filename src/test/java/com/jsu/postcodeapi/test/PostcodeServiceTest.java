@@ -37,15 +37,15 @@ public class PostcodeServiceTest {
     }
 
     /* ----------------------------- Creation Tests ----------------------------- */
-    // @Test
-    // void shouldNotAddInvalidPostcode() {
-    // ArgumentCaptor<CreatePostcodeDTO> createPostcodeDTO =
-    // ArgumentCaptor.forClass(CreatePostcodeDTO.class);
-    // CreatePostcodeDTO dto = new CreatePostcodeDTO();
-    // dto.setPostcode(12345);
-    // Assertions.assertThatThrownBy(() -> testingService.addPostcode(dto))
-    // .isInstanceOf(BadRequestException.class);
-    // }
+    @Test
+    void shouldNotAddInvalidPostcode() {
+        CreatePostcodeDTO dto = new CreatePostcodeDTO();
+
+        dto.setPostcode(12345);
+
+        Assertions.assertThatThrownBy(() -> testingService.addPostcode(dto))
+                .isInstanceOf(BadRequestException.class);
+    }
 
     @Test
     void shouldAddValidPostcode() {
