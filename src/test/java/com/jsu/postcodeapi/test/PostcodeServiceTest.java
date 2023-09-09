@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,6 +20,7 @@ import com.jsu.postcodeapi.Postcode.PostcodeRepository;
 import com.jsu.postcodeapi.Postcode.PostcodeService;
 import com.jsu.postcodeapi.Suburb.Suburb;
 import com.jsu.postcodeapi.exceptions.BadRequestException;
+import com.jsu.postcodeapi.exceptions.NotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class PostcodeServiceTest {
@@ -34,15 +36,15 @@ public class PostcodeServiceTest {
         this.testingService = new PostcodeService(postcodeRepository, modelMapper);
     }
 
-
     /* ----------------------------- Creation Tests ----------------------------- */
     // @Test
     // void shouldNotAddInvalidPostcode() {
-    //     ArgumentCaptor<CreatePostcodeDTO> createPostcodeDTO = ArgumentCaptor.forClass(CreatePostcodeDTO.class);
-    //     CreatePostcodeDTO dto = new CreatePostcodeDTO();
-    //     dto.setPostcode(12345);
-    //     Assertions.assertThatThrownBy(() -> testingService.addPostcode(dto))
-    //             .isInstanceOf(BadRequestException.class);
+    // ArgumentCaptor<CreatePostcodeDTO> createPostcodeDTO =
+    // ArgumentCaptor.forClass(CreatePostcodeDTO.class);
+    // CreatePostcodeDTO dto = new CreatePostcodeDTO();
+    // dto.setPostcode(12345);
+    // Assertions.assertThatThrownBy(() -> testingService.addPostcode(dto))
+    // .isInstanceOf(BadRequestException.class);
     // }
 
     @Test
@@ -67,10 +69,40 @@ public class PostcodeServiceTest {
         Assertions.assertThat(postcodeCaptor.getValue().getPostcode()).isEqualTo(postcode.getPostcode());
     }
 
-    /* -------------------------------- Get Tests ------------------------------- */
-    @Test 
+    /*
+     * -------------------------------- Read Tests -------------------------------
+     */
+    @Test
     void getAllPostcodesShouldCallFindAll() {
         testingService.getAllPostcodes();
         Mockito.verify(postcodeRepository).findAll();
+    }
+
+    /* ------------------------------ Update Tests ------------------------------ */
+
+    /* ------------------------------ Delete Tests ------------------------------ */
+
+    // @Test
+    // void shouldDeletePostcodeWithExistingId() {
+    // Long id = 1000L;
+
+    // BDDMockito.given(postcodeRepository.existsById(ArgumentMatchers.anyLong()))
+    // .willReturn(true);
+
+    // testingService.deleteById(id);
+
+    // ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
+
+    // Mockito.verify(postcodeRepository).delete(idCaptor.capture());
+
+    // Assertions.assertThat(idCaptor.getValue()).isEqualTo(id);
+    // }
+
+    @Test
+    void shouldNotDeletePostcodeWithInvalidId() {
+        Long id = 100L;
+        Assertions.assertThatThrownBy(() -> testingService.deleteById(id))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessage("Postcode that's associated with " + id + " does not exist, unable to delete");
     }
 }

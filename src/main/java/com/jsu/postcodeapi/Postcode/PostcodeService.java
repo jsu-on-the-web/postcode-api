@@ -115,7 +115,7 @@ public class PostcodeService {
     public boolean deleteById(Long id) {
         Optional<Postcode> deletedPostcode = this.findById(id);
         if (deletedPostcode.isEmpty()) {
-            return false;
+            throw new NotFoundException("Postcode that's associated with " + id + " does not exist, unable to delete");
         }
 
         this.postcodeRepository.delete(deletedPostcode.get());
