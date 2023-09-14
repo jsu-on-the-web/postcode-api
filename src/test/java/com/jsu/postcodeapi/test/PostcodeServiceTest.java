@@ -1,6 +1,8 @@
 package com.jsu.postcodeapi.test;
 
+import java.time.Clock;
 import java.util.List;
+import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,23 +81,42 @@ public class PostcodeServiceTest {
     }
 
     /* ------------------------------ Update Tests ------------------------------ */
+    @Test
+    void shouldUpdateValidPostcode() {
+        ArgumentCaptor<Postcode> postcodeCaptor = ArgumentCaptor.forClass(Postcode.class);
+        CreatePostcodeDTO createPostcodeDTO = new CreatePostcodeDTO();
+        // TODO: Figure out how to test update methods
+    }
 
     /* ------------------------------ Delete Tests ------------------------------ */
 
+    // ! BUG: The following test does not work. 
+    
     // @Test
     // void shouldDeletePostcodeWithExistingId() {
-    // Long id = 1000L;
+    //     Long id = 1L;
+    //     // Create a Postcode object and add it to the mock repository
+    //     Postcode existingPostcode = new Postcode(
+    //         1234
+    //     );
+    //     CreatePostcodeDTO createPostcodeDTO = new CreatePostcodeDTO();
+    //     createPostcodeDTO.setPostcode(existingPostcode.getPostcode());
 
-    // BDDMockito.given(postcodeRepository.existsById(ArgumentMatchers.anyLong()))
-    // .willReturn(true);
+    //     Mockito.when(modelMapper.map(createPostcodeDTO, Postcode.class)).thenReturn(existingPostcode);
 
-    // testingService.deleteById(id);
+    //     testingService.addPostcode(createPostcodeDTO);
 
-    // ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
 
-    // Mockito.verify(postcodeRepository).delete(idCaptor.capture());
+    //     BDDMockito.given(postcodeRepository.findById(id))
+    //             .willReturn(Optional.of(existingPostcode));
 
-    // Assertions.assertThat(idCaptor.getValue()).isEqualTo(id);
+    //     testingService.deleteById(id);
+
+    //     ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
+
+    //     Mockito.verify(postcodeRepository).deleteById(idCaptor.capture());
+
+    //     Assertions.assertThat(idCaptor.getValue()).isEqualTo(id);
     // }
 
     @Test
